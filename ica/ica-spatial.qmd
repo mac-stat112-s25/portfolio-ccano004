@@ -5,8 +5,7 @@ title: "Spatial Viz"
 Use this file for practice with the **spatial viz** in-class activity.  Refer to the class website for details.
 
 ```{r}
-install.packages(c("sf", "maps", "RColorBrewer", "gplots", "socviz", "leaflet", "devtools"))
-devtools::install_github("ropensci/rnaturalearthhires")
+
 
 #6.1 & 6.2 Review Simpson's Paradox
 # Load tidyverse package for plotting and wrangling

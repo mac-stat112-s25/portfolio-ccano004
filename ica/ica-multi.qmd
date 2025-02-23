@@ -34,10 +34,11 @@ ggplot(weather, aes(x = temp3pm,)) +
 # Multivariate! New examples!
 
 #Example 5: 
+
 # Plot temp3pm vs temp9am
 # Change the code in order to indicate the location to which each data point corresponds
-ggplot(weather, aes(y = temp3pm, x = temp9am, fill = location)) + geom_point()
-#did not finish
+ggplot(weather, aes(y = temp3pm, x = temp9am, color = location)) + 
+  geom_point()
 
 ```
 

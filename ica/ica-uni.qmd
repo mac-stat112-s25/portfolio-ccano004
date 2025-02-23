@@ -70,7 +70,7 @@ ggplot(hikes, aes(x = elevation)) +
 
 # COMMENT on the change in the code and the corresponding change in the plot
 ggplot(hikes, aes(x = elevation)) +
-  geom_histogram(color = "white", binwidth = 200) +
+  geom_histogram(color = "white", binwidth = 100) +
   labs(x = "Elevation (feet)", y = "Number of hikes")
 
 # Exercise 11: Density Plots
