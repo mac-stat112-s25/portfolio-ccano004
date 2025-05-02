@@ -3,3 +3,29 @@ title: "Quadvariate Viz"
 ---
 
 Use this file to generate a professional looking **quadvariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+
+
+
+```{r}
+
+library(tidyverse)
+
+#Australian weather data
+weather <- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |> 
+  mutate(date = as.Date(date)) 
+head(weather)
+
+```
+
+
+```{r fig.cap = "Plot of 3pm temp vs 9am temperatures in 3 Austrailian cities with rainfall data.", fig.alt = "Plot of 3pm temp vs 9am temperatures in 3 Austrailian cities with rainfall data."}
+
+
+ggplot(weather, aes(x = temp3pm, y = temp9am, color = raintoday)) + 
+  geom_point() +
+  facet_wrap( ~ location) +
+  labs(y = "9am temperature (Celsius)", x = "3pm temperature (Celsius)", color = "Rain") +
+  scale_color_manual(values = c("black", "blue", "grey"))
+
+```

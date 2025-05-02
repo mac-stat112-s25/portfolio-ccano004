@@ -4,7 +4,7 @@ project:
 
 book:
   title: "COMP/STAT112 Notebook"
-  author: "Your Name Here"
+  author: "Cristian Cano"
   date: today
   reader-mode: true
   page-navigation: true
@@ -30,6 +30,7 @@ book:
       - bw/bw-tri.qmd
       - bw/bw-quad.qmd
       - bw/bw-spatial.qmd
+      - bw/bw-soloproj.qmd
 
     - part: "In-class Activities"
       chapters: 
@@ -37,6 +38,15 @@ book:
       - ica/ica-bi.qmd
       - ica/ica-multi.qmd
       - ica/ica-spatial.qmd
+      - ica/ica-effective.qmd
+      
+      #- ica/ica-wrangling.qmd
+      - ica/ica-dates.qmd
+      - ica/joining.qmd
+      - ica/Strings.qmd
+      - ica/ica-dataimport.qmd
+      
+      
 
 format:
   html:

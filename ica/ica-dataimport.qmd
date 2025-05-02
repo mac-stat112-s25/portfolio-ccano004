@@ -1,0 +1,78 @@
+---
+title: "Data import 3/24/25"
+---
+
+```{r}
+library(tidyverse)
+# This shows folder where you stored this qmd!
+#getwd()
+
+#data from:
+#https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
+imdb_messy <- read_csv("../data/imdb_5000_messy.csv")
+
+view(imdb_messy)
+
+
+#Do a quick summary() of each variable in the dataset.
+imdb_messy |>
+  mutate(across(where(is.character), as.factor)) |>  # convert characters to factors in order to summarize
+  summary()
+#this shows the number of different answers from each variable
+#color variable has these answers: B&W, Black and White, color, Color, COLOR
+
+#Let's wrangle this inconsistency.
+imdb_temp <- imdb_messy |>
+  mutate(color = fct_recode(color,
+                            "Color" = "COLOR",
+                            "Color" = "color",
+                            "Black_White" = "B&W",
+                            "Black_White" = "Black and White"))
+imdb_temp |>
+  count(color)
+```
+
+```{r}
+#Exercise 6: Clean Data: Missing Data 1
+
+# Part a
+# As a first step, let’s simply understand the volume of NAs. Specifically:
+# Count the total number of rows in imdb_messy
+count(imdb_messy)
+
+# Then count the number of NAs in each column
+colSums(is.na(imdb_messy))
+
+# Show rows of movies with NA for variable actor_1_facebook_likes
+imdb_messy |> 
+  filter(is.na(actor_1_facebook_likes)) 
+
+```
+
+```{r}
+# Exercise 7: Clean Data: Missing Data 2 Part a
+
+# Calculate the average duration of a film. THINK: How can we deal with the NA’s?
+imdb_messy |> 
+  summarize(mean(duration, na.rm = TRUE))
+
+
+# drop_na()  drops out all/any rows with any NA value
+imdb_temp <- drop_na(imdb_messy)
+imdb_temp
+
+#relationship of film duration vs color
+imdb_messy <- imdb_messy |>
+  mutate(color = fct_recode(color,
+                            "Color" = "COLOR",
+                            "Color" = "color",
+                            "Black_White" = "B&W",
+                            "Black_White" = "Black and White"))
+ggplot(imdb_messy, aes(x = duration, fill = color)) +
+  geom_density()
+
+#create new dataset without datapoints 
+
+
+
+```

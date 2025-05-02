@@ -1,0 +1,140 @@
+---
+title: "Strings package In-class-activity 3/10/25"
+---
+
+
+```{r}
+library(tidyverse)
+
+classes <- data.frame(
+  sem        = c("SP2023", "FA2023", "SP2024"),
+  area       = c("History", "Math", "Anthro"),
+  enroll     = c("30 - people", "20 - people", "25 - people"),
+  instructor = c("Ernesto Capello", "Lori Ziegelmeier", "Arjun Guneratne")
+)
+classes
+
+
+# Define a new variable "num" that adds up the number of characters in the area label
+library(stringr)
+classes |> 
+  mutate(num = str_length(area))
+
+# Change the areas to "history", "math", "anthro" instead of "History", "Math", "Anthro"
+classes |> 
+  mutate(area = str_to_lower(area))
+
+# Create a variable that id's which courses were taught in spring
+classes |> 
+  mutate(spring = str_detect(sem, "SP"))
+
+# Change the semester labels to "fall2023", "spring2024", "spring2023"
+classes |> 
+  mutate(sem = str_replace(sem, "SP", "spring")) |>
+  mutate(sem = str_replace(sem, "FA", "fall"))
+
+# In the enroll variable, change all e's to 3's (just because?)
+classes |> 
+  mutate(enroll = str_replace(enroll, "e", "3"))
+
+
+# Use sem to create 2 new variables, one with only the semester (SP/FA) and 1 with the year
+classes |>
+  mutate(semester = str_sub(sem, 1, 2)) |>
+  mutate(year = str_sub(sem, 3, 10))
+
+
+```
+
+```{r}
+#Example 2: Suppose we only want the spring courses
+# How can we do this after mutating?
+classes |> 
+  mutate(spring = str_detect(sem, "SP"))
+
+# We don't have to mutate first!
+classes |> 
+  filter(str_detect(sem, "SP"))
+# Yet another way
+classes |> 
+  filter(!str_detect(sem, "FA"))
+
+
+#Example 4: splitting professor first and last name to 2 new columns
+classes |> 
+  separate(instructor, c("first", "last"), sep = " ")
+
+# Sometimes the function can "intuit" how we want to separate the variable
+classes |> 
+  separate(instructor, c("first", "last"))
+
+#Seperate enroll into 2 seperate columns:
+classes |>
+  separate(enroll, c("students", "people"), sep = "-")
+
+
+```
+
+
+
+```{r}
+courses <- read.csv("https://mac-stat.github.io/data/registrar.csv")
+# Check it out data from Mac's class schedule
+head(courses)
+
+# Construct a table that indicates the number of classes offered in each day/time slot
+# Print only the 6 most popular time slots
+courses |>
+  group_by(days) |>
+  count(days) |>
+  arrange(desc(n))
+
+```
+
+```{r}
+#Exercise 2: Prep the data
+#Split avail_max into 2 separate variables: avail and max.
+courses_clean = courses |>
+  separate(avail_max, c("avail", "max"), sep = "/") |>
+  mutate(enrolled = as.numeric(max) - as.numeric(avail)) |>
+  separate(number, c("dept", "number", "section"))
+head(courses_clean)
+
+```
+
+```{r}
+# Identify the 6 departments that offered the most sections
+courses_clean |>
+  group_by(dept) |>
+  count(section) |>
+  arrange(desc(n)) |>
+  head()
+
+
+# Identify the 6 departments with the longest average course titles
+courses_clean |>
+  group_by(dept) |>
+  mutate(title_len = str_length(name)) |>
+  arrange(desc(title_len)) |>
+  head()
+
+```
+
+```{r}
+#Exercise 4: STAT courses
+subset_courses_clean = courses_clean |>
+  filter(str_detect(instructor, "Alicia Johnson"))
+subset_courses_clean
+
+stat_classes = courses_clean |>
+  filter(str_detect(dept, "STAT")) |>
+  mutate(name = str_replace(name, "Introduction to ", ""))|>
+  mutate(name = str_replace(name, "Statistical", "Stat")) |>
+  mutate(start_time = str_sub(time, 1, 5)) |> 
+  select(number, name, start_time, enrolled)
+stat_classes
+
+
+
+
+```

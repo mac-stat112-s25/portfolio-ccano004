@@ -1,0 +1,40 @@
+---
+title: "Exam 1"
+---
+
+#Grand Research Question: What does the consumption of each food category in each country look like?
+
+
+**Get Data**
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+
+tuesdata <- tt_load('2020-02-18')
+head(tuesdata)
+
+fc <- tuesdata$food_consumption
+head(fc)
+
+
+```
+
+**Understand Data**
+```{r}
+nrow(fc)
+head(fc)
+str(fc)
+dim(fc)
+tail(fc)
+
+```
+
+**Understand Variables Individually**
+
+food_category is a categorical variable so use a bar graph to visualize
+consumption is quantitative variable, could use histogram, density, or boxplot to visualize
+co2_emmission is  quantitative variable, could use histogram, density, or boxplot to visualize
+country is categorical variable so could use a bar graph to visualize
+
+
+

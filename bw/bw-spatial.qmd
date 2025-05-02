@@ -3,3 +3,42 @@ title: "Spatial Viz"
 ---
 
 Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+
+```{r}
+
+#required packages
+library(tidyverse)
+library(openintro)
+library(leaflet)
+
+
+# Cristian's favorite St. Paul places - I used Google Maps to get coordinates
+# https://support.google.com/maps/answer/18539?hl=en&co=GENIE.Platform%3DDesktop
+favorite_stp <- tribble(
+  ~place, ~long, ~lat, ~favorite,
+  "Macalester College", -93.1712321, 44.9378965, "yes", 
+  "My house", -93.16738839203474, 44.92812057844699, "yes", 
+  "Oxendale's", -93.15603653732796, 44.92688855530436, "yes",     
+  "CLUES St. Paul", -93.06734643181807, 44.96145312092734, "no",
+  "Allianz Field", -93.16455061418475, 44.95318126798424, "no",
+  "Hmong Village", -93.04503462244946, 44.9722630505287, "no",   
+  "Dave's Hot Chicken", -93.18317086518435, 44.91826112185064, "no",
+  "Aldis", -93.17082904110954, 44.902388811948626, "no", 
+  "Como Park", -93.15412250760154, 44.98046155380665, "no",   
+  "Grandpa's Closet Thrift", -93.18879072359947, 44.960922090189015, "no",
+)
+
+```
+
+
+```{r fig.cap = "Map of my favorite places in Saint Paul, MN." , fig.alt = "Map of my favorite places in Saint Paul, MN."}
+
+pal <- colorFactor(palette = c("blue", "green"), domain = favorite_stp$favorite)
+leaflet(data = favorite_stp) |> 
+  addProviderTiles("Esri.WorldTopoMap") |> 
+  addCircles(color = ~pal(favorite), label = ~place, #this labels the place if you hover over it
+  radius = 100 ) |>
+  addLegend(position = "topright", pal = pal, values = ~favorite, title = "Favorite Places")
+
+```

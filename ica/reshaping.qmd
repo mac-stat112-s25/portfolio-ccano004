@@ -1,0 +1,180 @@
+---
+title: "Reshaping wrangling activity 3/3/25"
+---
+
+```{r}
+library(tidyverse)
+penguins <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv')
+head(penguins)
+#Tally up the number of male/female penguins by species in 2 ways:
+# Using count()
+
+
+# Using group_by() and summarize()
+penguins |>
+  group_by()
+
+
+
+```
+
+
+```{r}
+penguin_avg <- penguins |> 
+  group_by(species, sex) |> 
+  summarize(avg_body_mass = mean(body_mass_g, na.rm = TRUE)) |> 
+  na.omit()
+#I believe this will get the average body mass grouping by species and sex and emmitting when there is an NA value.
+penguin_avg
+
+```
+
+```{r}
+#Exercise: Pivot wider
+penguin_avg
+
+
+penguin_avg |> 
+pivot_wider(names_from = sex, values_from = avg_body_mass)
+
+
+# names_from = the variable whose values we want to separate into their own columns, i.e. where we want to get the new column names from
+# values_from = which variable to take the new column values from
+
+penguin_avg |> 
+pivot_wider(names_from = sex, values_from = avg_body_mass) |>
+  mutate(difference = female - male) |>
+  head()
+
+```
+```{r}
+#Exercise: Pivot longer
+
+#Storing wide data
+penguin_avg_wide <- penguin_avg |> 
+  pivot_wider(names_from = sex, values_from = avg_body_mass)
+penguin_avg_wide
+
+#To convert into long format:
+# We can either communicate which variables we WANT to collect into a single column (female, male)
+penguin_avg_wide |> 
+  pivot_longer(cols = c(female, male), names_to = "sex", values_to = "avg_body_mass")
+
+
+# Or which variable(s) we do NOT want to collect into a single column (sex)
+penguin_avg_wide |> 
+  pivot_longer(cols = -species, names_to = "sex", values_to = "avg_body_mass")
+
+```
+```{r}
+#Practice
+#making food dataset
+food <- data.frame(
+  customer = rep(c("A", "B"), each = 3),
+  restaurant = rep(c("Shish", "FrenchMeadow", "DunnBros"), 2),
+  order = c("falafel", "salad", "coffee", "baklava", "pastry", "tea")
+)
+food
+
+food |> 
+  pivot_wider(names_from = customer, values_from = restaurant) |>
+  head()
+
+
+```
+```{r}
+# Exercise 1: What’s the problem?
+# Consider data on a sleep study in which subjects received only 3 hours of sleep per night. Each day, their reaction time to a stimulus (in ms) was recorded
+sleep_wide <- read.csv("https://mac-stat.github.io/data/sleep_wide.csv")
+
+head(sleep_wide)
+#To plot need to convert to long format
+
+# For cols, try 2 appproaches: using - and starts_with
+sleep_wide |> 
+   pivot_longer(cols = c(starts_with("day")),
+                names_to = "day",
+                values_to = "reaction_time")
+
+#Chunk provided: names_prefix removed day_ from the new day column
+sleep_long <- sleep_wide |>
+  pivot_longer(cols = -Subject,
+               names_to = "day",
+               names_prefix = "day_",
+               values_to = "reaction_time")
+head(sleep_long)
+
+#making a line plot will look goofy because day is stored as chr not int, So do next exercise.
+
+```
+
+```{r}
+# Exercise 3: Changing variable classes & plotting
+# Let’s finalize sleep_long by mutating the Subject variable to be a factor (categorical) and the day variable to be numeric (quantitative). Take note of the mutate() code! You’ll use this type of code a lot.
+
+sleep_long <- sleep_wide |>
+  pivot_longer(cols = -Subject,
+               names_to = "day",
+               names_prefix = "day_",
+               values_to = "reaction_time") |> 
+  mutate(Subject = as.factor(Subject), day = as.numeric(day))
+
+# Check it out
+# Same data, different class
+head(sleep_long)
+
+# Make a line plot of reaction time by day for each subject
+# Put these all on the same frame
+ggplot(sleep_long, aes(x = day, y = reaction_time, color = Subject)) +
+  geom_point() + geom_line()
+
+# Make a line plot of reaction time by day for each subject
+# Put these all on separate frames (one per subject)
+ggplot(sleep_long, aes(x = day, y = reaction_time)) +
+  geom_point() + geom_line() +
+  facet_wrap(~ Subject)
+```
+
+
+```{r}
+# Exercise 4: Pivot wider: Make the data wide again, with each day becoming its own column.
+sleep_long |>
+  pivot_wider(names_from = day, values_from = reaction_time) |>
+  head()
+
+sleep_long |>
+  pivot_wider(names_from = day, values_from = reaction_time, names_prefix = "Day_") |>
+  head()
+
+```
+
+```{r}
+# Exercise 5: Practice with Billboard charts
+# Load data on songs that hit the billboard charts around the year 2000. Included for each song is the artist name, track name, the date it hit the charts (date.enter), and wk-related variables that indicate rankings in each subsequent week on the charts:
+
+# Load data
+library(tidyr)
+data("billboard")
+
+# Check it out
+head(billboard)
+
+# Part a
+# Construct and summarize a plot of how a song’s Billboard ranking its 2nd week on the chart (y-axis) is related to its ranking the 1st week on the charts (x-axis).
+ggplot(billboard, aes(y = wk2, x = wk1)) + 
+  geom_point() +
+  geom_abline(intercept = 0, slope = 1)
+
+# Part b
+# Use your wrangling tools to identify which songs are those above the line in Part a, i.e. with rankgings that went up from week 1 to week 2.
+billboard |> 
+  filter(wk2 > wk1)
+
+#Part C: Define a new dataset, nov_1999, which:
+  # only includes data on songs that entered the Billboard charts on November 6, 1999
+  # keeps all variables except track and date.entered. HINT: How can you avoid writing out all the variable names you want to keep?
+# Define nov_1999
+
+
+# Confirm that nov_1999 has 2 rows (songs) and 77 columns
+```

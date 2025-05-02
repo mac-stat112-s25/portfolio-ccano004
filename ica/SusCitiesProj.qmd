@@ -1,0 +1,61 @@
+
+
+```{r}
+library(tidyverse)
+
+
+# 1) Read both CSV files
+df_old <- read_csv("C:\Users\ccano\GitHub\portfolio-ccano004\data\Assessor_Parcel_Data_20250424 (1).csv",
+                   col_types = cols(
+                     `Assessment Year`    = col_integer(),
+                     `Street Address 1`   = col_character(),
+                     `Total Market Value` = col_double()
+                   ))
+
+df_new <- read_csv("Assessor_Parcel_Data_2015_2024.csv",
+                   col_types = cols(
+                     `Assessment Year`    = col_integer(),
+                     `Street Address 1`   = col_character(),
+                     `Total Market Value` = col_double()
+                   ))
+
+# 2) Combine and clean
+df <- bind_rows(df_old, df_new) %>%
+  mutate(`Street Address 1`   = toupper(`Street Address 1`),
+         site = case_when(
+           str_detect(`Street Address 1`, regex("120.*KELLOGG",    ignore_case = TRUE)) ~ "Science Museum of Minnesota",
+           str_detect(`Street Address 1`, regex("180.*KELLOGG",    ignore_case = TRUE)) ~ "Custom House",
+           str_detect(`Street Address 1`, regex("3001.*WHITE BEAR",ignore_case = TRUE)) ~ "Maplewood Mall",
+           str_detect(`Street Address 1`, regex("95.*7TH ST",      ignore_case = TRUE)) ~ "The 428",
+           str_detect(`Street Address 1`, regex("345.*ST PETER",   ignore_case = TRUE)) ~ "Landmark Towers",
+           TRUE ~ NA_character_
+         )) %>%
+  filter(!is.na(site))
+
+# 3) Aggregate by site & year
+df_summary <- df %>%
+  group_by(site, `Assessment Year`) %>%
+  summarise(total_value = sum(`Total Market Value`, na.rm = TRUE), .groups = "drop")
+
+# 4) Plot
+ggplot(df_summary, aes(x = `Assessment Year`, y = total_value / 1e6, color = site)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    title = "Total Market Value (2009–2024) by Site",
+    x     = "Assessment Year",
+    y     = "Total Market Value (Millions USD)",
+    color = "Site"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "bottom"
+  )
+
+
+
+
+
+```
+

@@ -3,3 +3,27 @@ title: "Bivariate Viz"
 ---
 
 Use this file to generate a professional looking **bivariate** visualization.  The visualization will not perfect the first time but you are expected to improve it throughout the semester especially after covering advanced topics such as effective viz.
+
+
+```{r}
+library(tidyverse)
+
+# Import data
+weather <- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |> 
+  mutate(date = as.Date(date))  
+
+# What are the units of observation?
+head(weather)
+```
+
+```{r}
+#| fig-cap: "3 Australian cities are labeled"
+
+ggplot(weather, aes(x = temp3pm, fill = location)) + 
+  geom_density(alpha = 0.5) + theme_classic() + 
+  labs( x = "3pm temperature (Celsius)", title = "Density plot of 3pm temperature in Australian cities." , color = "City")
+
+
+
+
+```
