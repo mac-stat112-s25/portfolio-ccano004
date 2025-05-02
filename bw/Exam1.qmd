@@ -9,6 +9,8 @@ title: "Exam 1"
 ```{r}
 library(tidytuesdayR)
 library(tidyverse)
+library(sf)
+library(rnaturalearth)
 
 tuesdata <- tt_load('2020-02-18')
 head(tuesdata)
@@ -35,6 +37,37 @@ food_category is a categorical variable so use a bar graph to visualize
 consumption is quantitative variable, could use histogram, density, or boxplot to visualize
 co2_emmission is  quantitative variable, could use histogram, density, or boxplot to visualize
 country is categorical variable so could use a bar graph to visualize
+
+
+##Answering Grand research question
+
+
+```{r}
+library(ggplot2)
+
+fc1 <- fc|>
+  group_by(country, food_category) |>
+  summarise(mean = mean(consumption)) 
+
+```
+
+```{r}
+df_beef <- fc1 |>
+  filter(food_category == "Beef")
+
+world_boundaries <- ne_countries(returnclass = "sf")
+ggplot(world_boundaries) + 
+  geom_sf(data =df_beef,  aes(fill = mean))
+
+library(maps)
+
+world <- map_data("world")
+
+ggplot(world, aes(map_id = region)) +
+  geom
+
+```
+
 
 
 
