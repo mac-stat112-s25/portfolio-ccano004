@@ -11,6 +11,7 @@ library(tidytuesdayR)
 library(tidyverse)
 library(sf)
 library(rnaturalearth)
+library(maps)
 
 tuesdata <- tt_load('2020-02-18')
 head(tuesdata)
@@ -28,7 +29,7 @@ head(fc)
 str(fc)
 dim(fc)
 tail(fc)
-
+fc
 ```
 
 **Understand Variables Individually**
@@ -39,35 +40,236 @@ co2_emmission is  quantitative variable, could use histogram, density, or boxplo
 country is categorical variable so could use a bar graph to visualize
 
 
-##Answering Grand research question
+
+##Answering grand research question
 
 
 ```{r}
 library(ggplot2)
 
+#Making a new dataset grouping by country and food category
 fc1 <- fc|>
-  group_by(country, food_category) |>
-  summarise(mean = mean(consumption)) 
+  group_by(country, food_category)
+
+#view(fc1)
 
 ```
 
 ```{r}
+#Filtering for only the food category Beef
 df_beef <- fc1 |>
   filter(food_category == "Beef")
+head(df_beef)
 
-world_boundaries <- ne_countries(returnclass = "sf")
-ggplot(world_boundaries) + 
-  geom_sf(data =df_beef,  aes(fill = mean))
+#Making a world map
+world_map <- map("world", plot = FALSE, fill = TRUE)
+world_sf <- st_as_sf(world_map)
 
-library(maps)
+#Joining world map to country
+joined_world_sf_beef <- world_sf |>
+  left_join(df_beef, by = c("ID" = "country"))
 
-world <- map_data("world")
-
-ggplot(world, aes(map_id = region)) +
-  geom
+#Mapping consumption of the food category
+joined_world_sf_beef |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Beef by Country") +
+  theme_minimal()
 
 ```
+```{r}
+df_eggs <- fc1 |>
+  filter(food_category == "Eggs")
+head(df_eggs)
 
+joined_world_sf_eggs <- world_sf |>
+  left_join(df_eggs, by = c("ID" = "country"))
 
+joined_world_sf_eggs |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Eggs by Country") +
+  theme_minimal()
+```
 
+```{r}
+df_fish <- fc1 |>
+  filter(food_category == "Fish")
+
+joined_world_sf_fish <- world_sf |>
+  left_join(df_fish, by = c("ID" = "country"))
+
+joined_world_sf_fish |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Fish by Country") +
+  theme_minimal()
+```
+
+```{r}
+df_lamb <- fc1 |>
+  filter(food_category == "Lamb & Goat")
+
+joined_world_sf_lamb <- world_sf |>
+  left_join(df_lamb, by = c("ID" = "country"))
+
+joined_world_sf_lamb |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Lamb & Goat by Country") +
+  theme_minimal()
+```
+
+```{r}
+df_milk <- fc1 |>
+  filter(food_category == "Milk - inc. cheese")
+
+joined_world_sf_milk <- world_sf |>
+  left_join(df_milk, by = c("ID" = "country"))
+
+joined_world_sf_milk |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Milk & Cheese by Country") +
+  theme_minimal()
+```
+
+```{r}
+df_nuts <- fc1 |>
+  filter(food_category == "Nuts inc. Peanut Butter")
+
+joined_world_sf_nuts <- world_sf |>
+  left_join(df_nuts, by = c("ID" = "country"))
+
+joined_world_sf_nuts |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Nuts (including peaunut butter) by Country") +
+  theme_minimal()
+```
+
+```{r}
+df_pork <- fc1 |>
+  filter(food_category == "Pork")
+
+joined_world_sf_pork <- world_sf |>
+  left_join(df_pork, by = c("ID" = "country"))
+
+joined_world_sf_pork |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Pork by Country") +
+  theme_minimal()
+```
+
+```{r}
+df_poultry <- fc1 |>
+  filter(food_category == "Poultry")
+
+joined_world_sf_poultry <- world_sf |>
+  left_join(df_poultry, by = c("ID" = "country"))
+
+joined_world_sf_poultry |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Poultry by Country") +
+  theme_minimal()
+```
+
+```{r}
+df_rice <- fc1 |>
+  filter(food_category == "Rice")
+
+joined_world_sf_rice <- world_sf |>
+  left_join(df_rice, by = c("ID" = "country"))
+
+joined_world_sf_rice |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Rice by Country") +
+  theme_minimal()
+```
+
+```{r}
+df_soybeans <- fc1 |>
+  filter(food_category == "Soybeans")
+
+joined_world_sf_soybeans <- world_sf |>
+  left_join(df_soybeans, by = c("ID" = "country"))
+
+joined_world_sf_soybeans |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Soybeans by Country") +
+  theme_minimal()
+```
+
+```{r}
+df_wheat <- fc1 |>
+  filter(food_category == "Wheat and Wheat Products")
+
+joined_world_sf_wheat <- world_sf |>
+  left_join(df_wheat, by = c("ID" = "country"))
+
+joined_world_sf_wheat |>
+  ggplot() +
+  geom_sf(aes(fill = consumption), na.rm = TRUE) +
+  scale_fill_gradient(
+    low  = "lightyellow",
+    high = "darkred",
+    name = "Consumption (kg/person/year)"
+  ) +
+  labs(title = "Consumption of Wheat by Country") +
+  theme_minimal()
+```
 
