@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/bw-soloproj.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Solo Project</span></a></li></ol></nav><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Solo Project</span>
-</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -302,337 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 </header><div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(leaflet)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(rnaturalearth)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(tigris)</span>
-<span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#Use this for counties with geography column</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>mn_counties <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="at">state =</span> <span class="st">"MN"</span>, <span class="at">cb =</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>
-Downloading: 2 B     
-Downloading: 2 B     
-Downloading: 5.5 kB     
-Downloading: 5.5 kB     
-Downloading: 6.8 kB     
-Downloading: 6.8 kB     
-Downloading: 9.6 kB     
-Downloading: 9.6 kB     
-Downloading: 14 kB     
-Downloading: 14 kB     
-Downloading: 14 kB     
-Downloading: 14 kB     
-Downloading: 62 kB     
-Downloading: 62 kB     
-Downloading: 71 kB     
-Downloading: 71 kB     
-Downloading: 80 kB     
-Downloading: 80 kB     
-Downloading: 84 kB     
-Downloading: 84 kB     
-Downloading: 93 kB     
-Downloading: 93 kB     
-Downloading: 97 kB     
-Downloading: 97 kB     
-Downloading: 100 kB     
-Downloading: 100 kB     
-Downloading: 220 kB     
-Downloading: 220 kB     
-Downloading: 220 kB     
-Downloading: 220 kB     
-Downloading: 230 kB     
-Downloading: 230 kB     
-Downloading: 240 kB     
-Downloading: 240 kB     
-Downloading: 260 kB     
-Downloading: 260 kB     
-Downloading: 280 kB     
-Downloading: 280 kB     
-Downloading: 280 kB     
-Downloading: 280 kB     
-Downloading: 290 kB     
-Downloading: 290 kB     
-Downloading: 290 kB     
-Downloading: 290 kB     
-Downloading: 310 kB     
-Downloading: 310 kB     
-Downloading: 330 kB     
-Downloading: 330 kB     
-Downloading: 340 kB     
-Downloading: 340 kB     
-Downloading: 370 kB     
-Downloading: 370 kB     
-Downloading: 460 kB     
-Downloading: 460 kB     
-Downloading: 510 kB     
-Downloading: 510 kB     
-Downloading: 550 kB     
-Downloading: 550 kB     
-Downloading: 600 kB     
-Downloading: 600 kB     
-Downloading: 640 kB     
-Downloading: 640 kB     
-Downloading: 760 kB     
-Downloading: 760 kB     
-Downloading: 910 kB     
-Downloading: 910 kB     
-Downloading: 1.1 MB     
-Downloading: 1.1 MB     
-Downloading: 1.1 MB     
-Downloading: 1.1 MB     
-Downloading: 1.2 MB     
-Downloading: 1.2 MB     
-Downloading: 1.2 MB     
-Downloading: 1.2 MB     
-Downloading: 1.2 MB     
-Downloading: 1.2 MB     
-Downloading: 1.3 MB     
-Downloading: 1.3 MB     
-Downloading: 1.3 MB     
-Downloading: 1.3 MB     
-Downloading: 1.4 MB     
-Downloading: 1.4 MB     
-Downloading: 1.5 MB     
-Downloading: 1.5 MB     
-Downloading: 1.7 MB     
-Downloading: 1.7 MB     
-Downloading: 1.7 MB     
-Downloading: 1.7 MB     
-Downloading: 1.8 MB     
-Downloading: 1.8 MB     
-Downloading: 1.8 MB     
-Downloading: 1.8 MB     
-Downloading: 2 MB     
-Downloading: 2 MB     
-Downloading: 2.1 MB     
-Downloading: 2.1 MB     
-Downloading: 2.1 MB     
-Downloading: 2.1 MB     
-Downloading: 2.3 MB     
-Downloading: 2.3 MB     
-Downloading: 2.3 MB     
-Downloading: 2.3 MB     
-Downloading: 2.5 MB     
-Downloading: 2.5 MB     
-Downloading: 2.5 MB     
-Downloading: 2.5 MB     
-Downloading: 2.5 MB     
-Downloading: 2.5 MB     
-Downloading: 2.6 MB     
-Downloading: 2.6 MB     
-Downloading: 2.8 MB     
-Downloading: 2.8 MB     
-Downloading: 2.8 MB     
-Downloading: 2.8 MB     
-Downloading: 3 MB     
-Downloading: 3 MB     
-Downloading: 3 MB     
-Downloading: 3 MB     
-Downloading: 3.2 MB     
-Downloading: 3.2 MB     
-Downloading: 3.2 MB     
-Downloading: 3.2 MB     
-Downloading: 3.3 MB     
-Downloading: 3.3 MB     
-Downloading: 3.3 MB     
-Downloading: 3.3 MB     
-Downloading: 3.5 MB     
-Downloading: 3.5 MB     
-Downloading: 3.5 MB     
-Downloading: 3.5 MB     
-Downloading: 3.7 MB     
-Downloading: 3.7 MB     
-Downloading: 3.7 MB     
-Downloading: 3.7 MB     
-Downloading: 3.8 MB     
-Downloading: 3.8 MB     
-Downloading: 4 MB     
-Downloading: 4 MB     
-Downloading: 4 MB     
-Downloading: 4 MB     
-Downloading: 4.1 MB     
-Downloading: 4.1 MB     
-Downloading: 4.3 MB     
-Downloading: 4.3 MB     
-Downloading: 4.3 MB     
-Downloading: 4.3 MB     
-Downloading: 4.5 MB     
-Downloading: 4.5 MB     
-Downloading: 4.5 MB     
-Downloading: 4.5 MB     
-Downloading: 4.7 MB     
-Downloading: 4.7 MB     
-Downloading: 4.7 MB     
-Downloading: 4.7 MB     
-Downloading: 4.9 MB     
-Downloading: 4.9 MB     
-Downloading: 4.9 MB     
-Downloading: 4.9 MB     
-Downloading: 5 MB     
-Downloading: 5 MB     
-Downloading: 5 MB     
-Downloading: 5 MB     
-Downloading: 5.1 MB     
-Downloading: 5.1 MB     
-Downloading: 5.3 MB     
-Downloading: 5.3 MB     
-Downloading: 5.3 MB     
-Downloading: 5.3 MB     
-Downloading: 5.5 MB     
-Downloading: 5.5 MB     
-Downloading: 5.7 MB     
-Downloading: 5.7 MB     
-Downloading: 5.7 MB     
-Downloading: 5.7 MB     
-Downloading: 5.8 MB     
-Downloading: 5.8 MB     
-Downloading: 5.8 MB     
-Downloading: 5.8 MB     
-Downloading: 5.9 MB     
-Downloading: 5.9 MB     
-Downloading: 6.1 MB     
-Downloading: 6.1 MB     
-Downloading: 6.1 MB     
-Downloading: 6.1 MB     
-Downloading: 6.3 MB     
-Downloading: 6.3 MB     
-Downloading: 6.3 MB     
-Downloading: 6.3 MB     
-Downloading: 6.5 MB     
-Downloading: 6.5 MB     
-Downloading: 6.5 MB     
-Downloading: 6.5 MB     
-Downloading: 6.7 MB     
-Downloading: 6.7 MB     
-Downloading: 6.7 MB     
-Downloading: 6.7 MB     
-Downloading: 6.9 MB     
-Downloading: 6.9 MB     
-Downloading: 6.9 MB     
-Downloading: 6.9 MB     
-Downloading: 7 MB     
-Downloading: 7 MB     
-Downloading: 7 MB     
-Downloading: 7 MB     
-Downloading: 7 MB     
-Downloading: 7 MB     
-Downloading: 7.1 MB     
-Downloading: 7.1 MB     
-Downloading: 7.2 MB     
-Downloading: 7.2 MB     
-Downloading: 7.2 MB     
-Downloading: 7.2 MB     
-Downloading: 7.4 MB     
-Downloading: 7.4 MB     
-Downloading: 7.4 MB     
-Downloading: 7.4 MB     
-Downloading: 7.6 MB     
-Downloading: 7.6 MB     
-Downloading: 7.6 MB     
-Downloading: 7.6 MB     
-Downloading: 7.8 MB     
-Downloading: 7.8 MB     
-Downloading: 7.9 MB     
-Downloading: 7.9 MB     
-Downloading: 8 MB     
-Downloading: 8 MB     
-Downloading: 8.1 MB     
-Downloading: 8.1 MB     
-Downloading: 8.1 MB     
-Downloading: 8.1 MB     
-Downloading: 8.3 MB     
-Downloading: 8.3 MB     
-Downloading: 8.3 MB     
-Downloading: 8.3 MB     
-Downloading: 8.5 MB     
-Downloading: 8.5 MB     
-Downloading: 8.5 MB     
-Downloading: 8.5 MB     
-Downloading: 8.7 MB     
-Downloading: 8.7 MB     
-Downloading: 8.7 MB     
-Downloading: 8.7 MB     
-Downloading: 8.9 MB     
-Downloading: 8.9 MB     
-Downloading: 8.9 MB     
-Downloading: 8.9 MB     
-Downloading: 8.9 MB     
-Downloading: 8.9 MB     
-Downloading: 9.1 MB     
-Downloading: 9.1 MB     
-Downloading: 9.1 MB     
-Downloading: 9.1 MB     
-Downloading: 9.3 MB     
-Downloading: 9.3 MB     
-Downloading: 9.3 MB     
-Downloading: 9.3 MB     
-Downloading: 9.5 MB     
-Downloading: 9.5 MB     
-Downloading: 9.5 MB     
-Downloading: 9.5 MB     
-Downloading: 9.6 MB     
-Downloading: 9.6 MB     
-Downloading: 9.8 MB     
-Downloading: 9.8 MB     
-Downloading: 9.8 MB     
-Downloading: 9.8 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 10 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 11 MB     
-Downloading: 12 MB     
-Downloading: 12 MB     
-Downloading: 12 MB     
-Downloading: 12 MB     </code></pre>
-</div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#This gives me townships not counties</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#mn_count &lt;- read_sf("~/GitHub/portfolio-ccano004/bw/bw-solo_prof_files/tl_2016_27_cousub.shp")</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#Food envi index data</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a>food_index <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/food_envi_index_data.csv"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#https://www.countyhealthrankings.org/health-data/community-conditions/health-infrastructure/health-promotion-and-harm-reduction/food-environment-index?year=2025&amp;state=27&amp;tab=1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#ggplot() +</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> mn_counties) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 mapping:  
 geom_sf: na.rm = FALSE
@@ -678,51 +348,12 @@ position_identity
     transform: function
     super:  &lt;ggproto object: Class CoordSf, CoordCartesian, Coord, gg&gt;</code></pre>
 </div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#mn_counties |&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="co">#head()</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#+ coord_sf(crs = "+proj=merc")</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">#mn_count |&gt; arrange(NAME) |&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>  <span class="co">#head()</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="co">#view(mn_count)</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#head(food_index)</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="co">#Change county variable to remove "county" at the end</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="co">#mn_counties &lt;- mn_counties |&gt;</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co">#  mutate(County = str_sub(NAMESLAD, 1, -7)) </span></span>
-<span id="cb6-15"><a href="#cb6-15"></a></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="co">#head(mn_counties)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># mn_count |&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#   st_join(hw) |&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#   head()</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a></span>
-<span id="cb7-5"><a href="#cb7-5"></a></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co"># This is the incorrect join</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># joined_food_index &lt;- food_index |&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#   left_join(mn_count, join_by("County" == "NAME"))</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#Joining our food_index dataset into our shapefile data</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a>joined_food_index <span class="ot">&lt;-</span> mn_counties <span class="sc">|&gt;</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>  <span class="fu">left_join</span>(food_index, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"NAME"</span> <span class="ot">=</span> <span class="st">"County"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Now joined_food_index is still an sf object.</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">ggplot</span>(<span class="at">data =</span> joined_food_index) <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Food_Env_Index), <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">coord_sf</span>(<span class="at">lims_method =</span> <span class="st">"geometry_bbox"</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">name =</span> <span class="st">"Food Environment Index"</span>) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Food Environment Index in Minnesota Counties"</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div class="cell-output-display">
+<div>
 <figure class="figure"><p><img src="bw-soloproj_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="Food Environment Index by Minnesota Counties" width="672"></p>
-<figcaption>Food Environment Index by Minnesota Counties. Data from: County Health Rankings at the University of Wisconsin</figcaption></figure>
+</figure>
 </div>
 </div>
 </div>
@@ -1361,87 +992,88 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">---</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="an">title:</span><span class="co"> "Solo Project"</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">---</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a></span>
-<span id="cb9-7"><a href="#cb9-7"></a><span class="in">```{r}</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="fu">library</span>(leaflet)</span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="fu">library</span>(sf)</span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="fu">library</span>(rnaturalearth)</span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb9-13"><a href="#cb9-13"></a><span class="fu">library</span>(tigris)</span>
-<span id="cb9-14"><a href="#cb9-14"></a></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="co">#Use this for counties with geography column</span></span>
-<span id="cb9-16"><a href="#cb9-16"></a>mn_counties <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="at">state =</span> <span class="st">"MN"</span>, <span class="at">cb =</span><span class="cn">TRUE</span>)</span>
-<span id="cb9-17"><a href="#cb9-17"></a></span>
-<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#This gives me townships not counties</span></span>
-<span id="cb9-19"><a href="#cb9-19"></a><span class="co">#mn_count &lt;- read_sf("~/GitHub/portfolio-ccano004/bw/bw-solo_prof_files/tl_2016_27_cousub.shp")</span></span>
-<span id="cb9-20"><a href="#cb9-20"></a></span>
-<span id="cb9-21"><a href="#cb9-21"></a><span class="co">#Food envi index data</span></span>
-<span id="cb9-22"><a href="#cb9-22"></a>food_index <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/food_envi_index_data.csv"</span>)</span>
-<span id="cb9-23"><a href="#cb9-23"></a></span>
-<span id="cb9-24"><a href="#cb9-24"></a><span class="co">#https://www.countyhealthrankings.org/health-data/community-conditions/health-infrastructure/health-promotion-and-harm-reduction/food-environment-index?year=2025&amp;state=27&amp;tab=1</span></span>
-<span id="cb9-25"><a href="#cb9-25"></a></span>
-<span id="cb9-26"><a href="#cb9-26"></a><span class="in">```</span></span>
-<span id="cb9-27"><a href="#cb9-27"></a></span>
-<span id="cb9-30"><a href="#cb9-30"></a><span class="in">```{r}</span></span>
-<span id="cb9-31"><a href="#cb9-31"></a><span class="co">#ggplot() +</span></span>
-<span id="cb9-32"><a href="#cb9-32"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> mn_counties) </span>
-<span id="cb9-33"><a href="#cb9-33"></a></span>
-<span id="cb9-34"><a href="#cb9-34"></a><span class="co">#mn_counties |&gt;</span></span>
-<span id="cb9-35"><a href="#cb9-35"></a>  <span class="co">#head()</span></span>
-<span id="cb9-36"><a href="#cb9-36"></a></span>
-<span id="cb9-37"><a href="#cb9-37"></a><span class="co">#+ coord_sf(crs = "+proj=merc")</span></span>
-<span id="cb9-38"><a href="#cb9-38"></a></span>
-<span id="cb9-39"><a href="#cb9-39"></a><span class="co">#mn_count |&gt; arrange(NAME) |&gt;</span></span>
-<span id="cb9-40"><a href="#cb9-40"></a>  <span class="co">#head()</span></span>
-<span id="cb9-41"><a href="#cb9-41"></a><span class="co">#view(mn_count)</span></span>
-<span id="cb9-42"><a href="#cb9-42"></a></span>
-<span id="cb9-43"><a href="#cb9-43"></a><span class="co">#head(food_index)</span></span>
-<span id="cb9-44"><a href="#cb9-44"></a></span>
-<span id="cb9-45"><a href="#cb9-45"></a><span class="co">#Change county variable to remove "county" at the end</span></span>
-<span id="cb9-46"><a href="#cb9-46"></a><span class="co">#mn_counties &lt;- mn_counties |&gt;</span></span>
-<span id="cb9-47"><a href="#cb9-47"></a><span class="co">#  mutate(County = str_sub(NAMESLAD, 1, -7)) </span></span>
-<span id="cb9-48"><a href="#cb9-48"></a></span>
-<span id="cb9-49"><a href="#cb9-49"></a><span class="co">#head(mn_counties)</span></span>
-<span id="cb9-50"><a href="#cb9-50"></a></span>
-<span id="cb9-51"><a href="#cb9-51"></a><span class="in">```</span></span>
-<span id="cb9-52"><a href="#cb9-52"></a></span>
-<span id="cb9-53"><a href="#cb9-53"></a></span>
-<span id="cb9-56"><a href="#cb9-56"></a><span class="in">```{r}</span></span>
-<span id="cb9-57"><a href="#cb9-57"></a><span class="co"># mn_count |&gt;</span></span>
-<span id="cb9-58"><a href="#cb9-58"></a><span class="co">#   st_join(hw) |&gt;</span></span>
-<span id="cb9-59"><a href="#cb9-59"></a><span class="co">#   head()</span></span>
-<span id="cb9-60"><a href="#cb9-60"></a></span>
-<span id="cb9-61"><a href="#cb9-61"></a></span>
-<span id="cb9-62"><a href="#cb9-62"></a><span class="co"># This is the incorrect join</span></span>
-<span id="cb9-63"><a href="#cb9-63"></a><span class="co"># joined_food_index &lt;- food_index |&gt;</span></span>
-<span id="cb9-64"><a href="#cb9-64"></a><span class="co">#   left_join(mn_count, join_by("County" == "NAME"))</span></span>
-<span id="cb9-65"><a href="#cb9-65"></a></span>
-<span id="cb9-66"><a href="#cb9-66"></a><span class="co">#Joining our food_index dataset into our shapefile data</span></span>
-<span id="cb9-67"><a href="#cb9-67"></a>joined_food_index <span class="ot">&lt;-</span> mn_counties <span class="sc">|&gt;</span></span>
-<span id="cb9-68"><a href="#cb9-68"></a>  <span class="fu">left_join</span>(food_index, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"NAME"</span> <span class="ot">=</span> <span class="st">"County"</span>))</span>
-<span id="cb9-69"><a href="#cb9-69"></a></span>
-<span id="cb9-70"><a href="#cb9-70"></a><span class="in">```</span></span>
-<span id="cb9-71"><a href="#cb9-71"></a></span>
-<span id="cb9-72"><a href="#cb9-72"></a></span>
-<span id="cb9-73"><a href="#cb9-73"></a></span>
-<span id="cb9-74"><a href="#cb9-74"></a></span>
-<span id="cb9-75"><a href="#cb9-75"></a></span>
-<span id="cb9-76"><a href="#cb9-76"></a><span class="in">```{r fig.cap = "Food Environment Index by Minnesota Counties. Data from: County Health Rankings at the University of Wisconsin" , fig.alt = "Food Environment Index by Minnesota Counties"}</span></span>
-<span id="cb9-77"><a href="#cb9-77"></a></span>
-<span id="cb9-78"><a href="#cb9-78"></a><span class="in"># Now joined_food_index is still an sf object.</span></span>
-<span id="cb9-79"><a href="#cb9-79"></a><span class="in">ggplot(data = joined_food_index) +</span></span>
-<span id="cb9-80"><a href="#cb9-80"></a><span class="in">  geom_sf(aes(fill = Food_Env_Index), color = "white", na.rm = TRUE) +</span></span>
-<span id="cb9-81"><a href="#cb9-81"></a><span class="in">  coord_sf(lims_method = "geometry_bbox") +</span></span>
-<span id="cb9-82"><a href="#cb9-82"></a><span class="in">  scale_fill_viridis_c(option = "plasma", name = "Food Environment Index") +</span></span>
-<span id="cb9-83"><a href="#cb9-83"></a><span class="in">  labs(title = "Food Environment Index in Minnesota Counties") +</span></span>
-<span id="cb9-84"><a href="#cb9-84"></a><span class="in">  theme_void()</span></span>
-<span id="cb9-85"><a href="#cb9-85"></a></span>
-<span id="cb9-86"><a href="#cb9-86"></a><span class="in">```</span></span>
-<span id="cb9-87"><a href="#cb9-87"></a></span>
+<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="an">title:</span><span class="co"> "Solo Project"</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">---</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="in">```{r, include=FALSE}</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="in">knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="in">library(leaflet)</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="in">library(sf)</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="in">library(rnaturalearth)</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="in">library(ggplot2)</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="in">library(tigris)</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="in">#Use this for counties with geography column</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="in">mn_counties &lt;- counties(state = "MN", cb =TRUE)</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="in">#This gives me townships not counties</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="in">#mn_count &lt;- read_sf("~/GitHub/portfolio-ccano004/bw/bw-solo_prof_files/tl_2016_27_cousub.shp")</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="in">#Food envi index data</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="in">food_index &lt;- read_csv("../data/food_envi_index_data.csv")</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="in">#https://www.countyhealthrankings.org/health-data/community-conditions/health-infrastructure/health-promotion-and-harm-reduction/food-environment-index?year=2025&amp;state=27&amp;tab=1</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="in">```</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="in">```{r}</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#ggplot() +</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a>   <span class="fu">geom_sf</span>(<span class="at">data =</span> mn_counties) </span>
+<span id="cb2-32"><a href="#cb2-32"></a></span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#mn_counties |&gt;</span></span>
+<span id="cb2-34"><a href="#cb2-34"></a>  <span class="co">#head()</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a></span>
+<span id="cb2-36"><a href="#cb2-36"></a><span class="co">#+ coord_sf(crs = "+proj=merc")</span></span>
+<span id="cb2-37"><a href="#cb2-37"></a></span>
+<span id="cb2-38"><a href="#cb2-38"></a><span class="co">#mn_count |&gt; arrange(NAME) |&gt;</span></span>
+<span id="cb2-39"><a href="#cb2-39"></a>  <span class="co">#head()</span></span>
+<span id="cb2-40"><a href="#cb2-40"></a><span class="co">#view(mn_count)</span></span>
+<span id="cb2-41"><a href="#cb2-41"></a></span>
+<span id="cb2-42"><a href="#cb2-42"></a><span class="co">#head(food_index)</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a></span>
+<span id="cb2-44"><a href="#cb2-44"></a><span class="co">#Change county variable to remove "county" at the end</span></span>
+<span id="cb2-45"><a href="#cb2-45"></a><span class="co">#mn_counties &lt;- mn_counties |&gt;</span></span>
+<span id="cb2-46"><a href="#cb2-46"></a><span class="co">#  mutate(County = str_sub(NAMESLAD, 1, -7)) </span></span>
+<span id="cb2-47"><a href="#cb2-47"></a></span>
+<span id="cb2-48"><a href="#cb2-48"></a><span class="co">#head(mn_counties)</span></span>
+<span id="cb2-49"><a href="#cb2-49"></a></span>
+<span id="cb2-50"><a href="#cb2-50"></a><span class="in">```</span></span>
+<span id="cb2-51"><a href="#cb2-51"></a></span>
+<span id="cb2-52"><a href="#cb2-52"></a></span>
+<span id="cb2-55"><a href="#cb2-55"></a><span class="in">```{r}</span></span>
+<span id="cb2-56"><a href="#cb2-56"></a><span class="co"># mn_count |&gt;</span></span>
+<span id="cb2-57"><a href="#cb2-57"></a><span class="co">#   st_join(hw) |&gt;</span></span>
+<span id="cb2-58"><a href="#cb2-58"></a><span class="co">#   head()</span></span>
+<span id="cb2-59"><a href="#cb2-59"></a></span>
+<span id="cb2-60"><a href="#cb2-60"></a></span>
+<span id="cb2-61"><a href="#cb2-61"></a><span class="co"># This is the incorrect join</span></span>
+<span id="cb2-62"><a href="#cb2-62"></a><span class="co"># joined_food_index &lt;- food_index |&gt;</span></span>
+<span id="cb2-63"><a href="#cb2-63"></a><span class="co">#   left_join(mn_count, join_by("County" == "NAME"))</span></span>
+<span id="cb2-64"><a href="#cb2-64"></a></span>
+<span id="cb2-65"><a href="#cb2-65"></a><span class="co">#Joining our food_index dataset into our shapefile data</span></span>
+<span id="cb2-66"><a href="#cb2-66"></a>joined_food_index <span class="ot">&lt;-</span> mn_counties <span class="sc">|&gt;</span></span>
+<span id="cb2-67"><a href="#cb2-67"></a>  <span class="fu">left_join</span>(food_index, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"NAME"</span> <span class="ot">=</span> <span class="st">"County"</span>))</span>
+<span id="cb2-68"><a href="#cb2-68"></a></span>
+<span id="cb2-69"><a href="#cb2-69"></a><span class="in">```</span></span>
+<span id="cb2-70"><a href="#cb2-70"></a></span>
+<span id="cb2-71"><a href="#cb2-71"></a></span>
+<span id="cb2-72"><a href="#cb2-72"></a></span>
+<span id="cb2-73"><a href="#cb2-73"></a></span>
+<span id="cb2-74"><a href="#cb2-74"></a></span>
+<span id="cb2-75"><a href="#cb2-75"></a><span class="in">```{r fig.alt = "Food Environment Index by Minnesota Counties"}</span></span>
+<span id="cb2-76"><a href="#cb2-76"></a></span>
+<span id="cb2-77"><a href="#cb2-77"></a><span class="in"># Now joined_food_index is still an sf object.</span></span>
+<span id="cb2-78"><a href="#cb2-78"></a><span class="in">ggplot(data = joined_food_index) +</span></span>
+<span id="cb2-79"><a href="#cb2-79"></a><span class="in">  geom_sf(aes(fill = Food_Env_Index), color = "white", na.rm = TRUE) +</span></span>
+<span id="cb2-80"><a href="#cb2-80"></a><span class="in">  coord_sf(lims_method = "geometry_bbox") +</span></span>
+<span id="cb2-81"><a href="#cb2-81"></a><span class="in">  scale_fill_viridis_c(option = "plasma", name = "Food Environment Index") +</span></span>
+<span id="cb2-82"><a href="#cb2-82"></a><span class="in">  labs(title = "Food Environment Index in Minnesota Counties", caption = "Data from: County Health Rankings at the University of Wisconsin." ) +</span></span>
+<span id="cb2-83"><a href="#cb2-83"></a><span class="in">  theme_void()</span></span>
+<span id="cb2-84"><a href="#cb2-84"></a></span>
+<span id="cb2-85"><a href="#cb2-85"></a><span class="in">```</span></span>
+<span id="cb2-86"><a href="#cb2-86"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

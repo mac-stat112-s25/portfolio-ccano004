@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../bw/bw-uni.html">Best Work</a></li><li class="breadcrumb-item"><a href="../bw/bw-quad.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quadvariate Viz</span></a></li></ol></nav><div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">
 <span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quadvariate Viz</span>
-</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -301,96 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><p>Use this file to generate a professional looking <strong>quadvariate</strong> visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.</p>
-<div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyverse' was built under R version 4.4.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggplot2' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tibble' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyr' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'readr' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'purrr' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'dplyr' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'stringr' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'forcats' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lubridate' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.4     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">#Australian weather data</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/weather_3_locations.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(date)) </span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="fu">head</span>(weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
-<pre><code>        date   location mintemp maxtemp rainfall evaporation sunshine
-1 2020-01-01 Wollongong    17.1    23.1        0          NA       NA
-2 2020-01-02 Wollongong    17.7    24.2        0          NA       NA
-3 2020-01-03 Wollongong    19.7    26.8        0          NA       NA
-4 2020-01-04 Wollongong    20.4    35.5        0          NA       NA
-5 2020-01-05 Wollongong    19.8    21.4        0          NA       NA
-6 2020-01-06 Wollongong    18.3    22.9        0          NA       NA
-  windgustdir windgustspeed winddir9am winddir3pm windspeed9am windspeed3pm
-1         SSW            39        SSW        SSE           20           15
-2         SSW            37          S        ENE           13           15
-3          NE            41        NNW        NNE            7           17
-4         SSW            78         NE        NNE           15           17
-5         SSW            57        SSW          S           31           35
-6          NE            35        ESE         NE           17           20
-  humidity9am humidity3pm pressure9am pressure3pm cloud9am cloud3pm temp9am
-1          69          64      1014.9      1014.0        8        1    19.1
-2          72          54      1020.1      1017.7        7        1    19.8
-3          72          71      1017.5      1013.0        6       NA    23.4
-4          77          69      1008.8      1003.9       NA       NA    24.5
-5          70          75      1018.9      1019.9       NA        7    20.7
-6          71          71      1021.2      1018.2       NA       NA    20.9
-  temp3pm raintoday risk_mm raintomorrow
-1    22.9        No     0.0           No
-2    23.6        No     0.0           No
-3    25.7        No     0.0           No
-4    26.7        No     0.0           No
-5    20.0        No     0.0           No
-6    22.6        No     0.8           No</code></pre>
-</div>
-</div>
-<div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">ggplot</span>(weather, <span class="fu">aes</span>(<span class="at">x =</span> temp3pm, <span class="at">y =</span> temp9am, <span class="at">color =</span> raintoday)) <span class="sc">+</span> </span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> location) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"9am temperature (Celsius)"</span>, <span class="at">x =</span> <span class="st">"3pm temperature (Celsius)"</span>, <span class="at">color =</span> <span class="st">"Rain"</span>) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"blue"</span>, <span class="st">"grey"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 27 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-</div>
+</header><div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="bw-quad_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="Plot of 3pm temp vs 9am temperatures in 3 Austrailian cities with rainfall data." width="672"></p>
@@ -1033,37 +944,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">---</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="an">title:</span><span class="co"> "Quadvariate Viz"</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="co">---</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a></span>
-<span id="cb17-5"><a href="#cb17-5"></a>Use this file to generate a professional looking **quadvariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.</span>
-<span id="cb17-6"><a href="#cb17-6"></a></span>
-<span id="cb17-7"><a href="#cb17-7"></a></span>
-<span id="cb17-8"><a href="#cb17-8"></a></span>
-<span id="cb17-9"><a href="#cb17-9"></a></span>
-<span id="cb17-12"><a href="#cb17-12"></a><span class="in">```{r}</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb17-14"><a href="#cb17-14"></a></span>
-<span id="cb17-15"><a href="#cb17-15"></a><span class="co">#Australian weather data</span></span>
-<span id="cb17-16"><a href="#cb17-16"></a>weather <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mac-stat.github.io/data/weather_3_locations.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb17-17"><a href="#cb17-17"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">as.Date</span>(date)) </span>
-<span id="cb17-18"><a href="#cb17-18"></a><span class="fu">head</span>(weather)</span>
-<span id="cb17-19"><a href="#cb17-19"></a></span>
-<span id="cb17-20"><a href="#cb17-20"></a><span class="in">```</span></span>
-<span id="cb17-21"><a href="#cb17-21"></a></span>
-<span id="cb17-22"><a href="#cb17-22"></a></span>
-<span id="cb17-23"><a href="#cb17-23"></a><span class="in">```{r fig.cap = "Plot of 3pm temp vs 9am temperatures in 3 Austrailian cities with rainfall data.", fig.alt = "Plot of 3pm temp vs 9am temperatures in 3 Austrailian cities with rainfall data."}</span></span>
-<span id="cb17-24"><a href="#cb17-24"></a></span>
-<span id="cb17-25"><a href="#cb17-25"></a></span>
-<span id="cb17-26"><a href="#cb17-26"></a><span class="in">ggplot(weather, aes(x = temp3pm, y = temp9am, color = raintoday)) + </span></span>
-<span id="cb17-27"><a href="#cb17-27"></a><span class="in">  geom_point() +</span></span>
-<span id="cb17-28"><a href="#cb17-28"></a><span class="in">  facet_wrap( ~ location) +</span></span>
-<span id="cb17-29"><a href="#cb17-29"></a><span class="in">  labs(y = "9am temperature (Celsius)", x = "3pm temperature (Celsius)", color = "Rain") +</span></span>
-<span id="cb17-30"><a href="#cb17-30"></a><span class="in">  scale_color_manual(values = c("black", "blue", "grey"))</span></span>
-<span id="cb17-31"><a href="#cb17-31"></a></span>
-<span id="cb17-32"><a href="#cb17-32"></a><span class="in">```</span></span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="an">title:</span><span class="co"> "Quadvariate Viz"</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">---</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="in">```{r, include=FALSE}</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="in">knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="in">#Australian weather data</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="in">weather &lt;- read.csv("https://mac-stat.github.io/data/weather_3_locations.csv") |&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="in">  mutate(date = as.Date(date)) </span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="in">head(weather)</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="in">```</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a></span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="in">```{r fig.cap = "Plot of 3pm temp vs 9am temperatures in 3 Austrailian cities with rainfall data.", fig.alt = "Plot of 3pm temp vs 9am temperatures in 3 Austrailian cities with rainfall data."}</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a></span>
+<span id="cb1-20"><a href="#cb1-20"></a></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="in">ggplot(weather, aes(x = temp3pm, y = temp9am, color = raintoday)) + </span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="in">  geom_point() +</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="in">  facet_wrap( ~ location) +</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="in">  labs(y = "9am temperature (Celsius)", x = "3pm temperature (Celsius)", color = "Rain") +</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="in">  scale_color_manual(values = c("black", "blue", "grey"))</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
