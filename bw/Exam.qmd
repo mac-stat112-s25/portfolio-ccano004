@@ -4,40 +4,29 @@ Author: "Cristian Cano"
 Date: 05/06/2025
 ---
 
-```{r, include=FALSE}
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
-```
-
 
 # Grand Research Question: What does the consumption of each food category in each country look like?
 
 
-**Get Data**
-```{r}
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
 library(tidytuesdayR)
 library(tidyverse)
 library(sf)
 library(rnaturalearth)
 library(maps)
+```
 
+
+**Get Data**
+```{r}
 tuesdata <- tt_load('2020-02-18')
 head(tuesdata)
 
 fc <- tuesdata$food_consumption
-head(fc)
-
+#head(fc)
 ```
 
-
-**Understand Data**
-```{r}
-nrow(fc)
-head(fc)
-str(fc)
-dim(fc)
-tail(fc)
-fc
-```
 
 **Understand Variables Individually**
 
@@ -66,7 +55,7 @@ fc1 <- fc|>
 #Filtering for only the food category Beef
 df_beef <- fc1 |>
   filter(food_category == "Beef")
-head(df_beef)
+#head(df_beef)
 
 #Making a world map
 world_map <- map("world", plot = FALSE, fill = TRUE)
@@ -93,7 +82,7 @@ joined_world_sf_beef |>
 ```{r}
 df_eggs <- fc1 |>
   filter(food_category == "Eggs")
-head(df_eggs)
+#head(df_eggs)
 
 joined_world_sf_eggs <- world_sf |>
   left_join(df_eggs, by = c("ID" = "country"))
@@ -109,6 +98,7 @@ joined_world_sf_eggs |>
   labs(title = "Consumption of Eggs by Country") +
   theme_minimal()
 ```
+- Eggs are generally consumed less in African countries
 
 
 ```{r}
@@ -148,6 +138,7 @@ joined_world_sf_lamb |>
   labs(title = "Consumption of Lamb & Goat by Country") +
   theme_minimal()
 ```
+- Lamb and Goat consumption is greater in north African countries as well as Australia and New Zealand.
 
 ```{r}
 df_milk <- fc1 |>
@@ -168,6 +159,7 @@ joined_world_sf_milk |>
   theme_minimal()
 ```
 
+- Dairy consumption is greater in northern European countries.
 ```{r}
 df_nuts <- fc1 |>
   filter(food_category == "Nuts inc. Peanut Butter")
@@ -205,6 +197,7 @@ joined_world_sf_pork |>
   labs(title = "Consumption of Pork by Country") +
   theme_minimal()
 ```
+- Pork consumption is most popular in Europe.
 
 ```{r}
 df_poultry <- fc1 |>

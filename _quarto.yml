@@ -31,7 +31,7 @@ book:
       - bw/bw-quad.qmd
       - bw/bw-spatial.qmd
       - bw/bw-soloproj.qmd
-      - bw/Exam1.qmd
+      - bw/Exam.qmd
       
       
     - part: "Summaries"
@@ -76,7 +76,7 @@ execute:
   echo: true     # change to true to show the code
   error: false
   warning: false
-
+  
 
 editor: 
   markdown:

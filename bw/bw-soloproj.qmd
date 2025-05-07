@@ -2,7 +2,8 @@
 title: "Solo Project"
 ---
 
-```{r}
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
 library(tidyverse)
 library(leaflet)
 library(sf)
@@ -67,14 +68,14 @@ joined_food_index <- mn_counties |>
 
 
 
-```{r fig.cap = "Food Environment Index by Minnesota Counties. Data from: County Health Rankings at the University of Wisconsin" , fig.alt = "Food Environment Index by Minnesota Counties"}
+```{r fig.alt = "Food Environment Index by Minnesota Counties"}
 
 # Now joined_food_index is still an sf object.
 ggplot(data = joined_food_index) +
   geom_sf(aes(fill = Food_Env_Index), color = "white", na.rm = TRUE) +
   coord_sf(lims_method = "geometry_bbox") +
   scale_fill_viridis_c(option = "plasma", name = "Food Environment Index") +
-  labs(title = "Food Environment Index in Minnesota Counties") +
+  labs(title = "Food Environment Index in Minnesota Counties", caption = "Data from: County Health Rankings at the University of Wisconsin." ) +
   theme_void()
 
 ```
