@@ -76,8 +76,8 @@
     ]
   },
   {
-    "objectID": "bw/Exam1.html",
-    "href": "bw/Exam1.html",
+    "objectID": "bw/Exam.html",
+    "href": "bw/Exam.html",
     "title": "\n7  Exam 1\n",
     "section": "",
     "text": "8 Grand Research Question: What does the consumption of each food category in each country look like?\nGet Data\n$food_consumption\n# A tibble: 1,430 × 4\n   country   food_category            consumption co2_emmission\n   &lt;chr&gt;     &lt;chr&gt;                          &lt;dbl&gt;         &lt;dbl&gt;\n 1 Argentina Pork                           10.5          37.2 \n 2 Argentina Poultry                        38.7          41.5 \n 3 Argentina Beef                           55.5        1712   \n 4 Argentina Lamb & Goat                     1.56         54.6 \n 5 Argentina Fish                            4.36          6.96\n 6 Argentina Eggs                           11.4          10.5 \n 7 Argentina Milk - inc. cheese            195.          278.  \n 8 Argentina Wheat and Wheat Products      103.           19.7 \n 9 Argentina Rice                            8.77         11.2 \n10 Argentina Soybeans                        0             0   \n# ℹ 1,420 more rows\nUnderstand Variables Individually",
@@ -87,11 +87,11 @@
     ]
   },
   {
-    "objectID": "bw/Exam1.html#answering-grand-research-question",
-    "href": "bw/Exam1.html#answering-grand-research-question",
+    "objectID": "bw/Exam.html#answering-grand-research-question",
+    "href": "bw/Exam.html#answering-grand-research-question",
     "title": "\n7  Exam 1\n",
     "section": "\n8.1 Answering grand research question",
-    "text": "8.1 Answering grand research question\n\n\n\n\n\n\n\n\n\nThere is alot of Beef consumption in Argentina, compared to the rest of the world.\n\n\n\n# A tibble: 6 × 4\n# Groups:   country, food_category [6]\n  country     food_category consumption co2_emmission\n  &lt;chr&gt;       &lt;chr&gt;               &lt;dbl&gt;         &lt;dbl&gt;\n1 Argentina   Eggs                11.4          10.5 \n2 Australia   Eggs                 8.51          7.82\n3 Albania     Eggs                12.4          11.4 \n4 Iceland     Eggs                 8.24          7.57\n5 New Zealand Eggs                 9.91          9.1 \n6 USA         Eggs                14.6          13.4 \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRice consumption is concentrated mainly in Asia\n\n\n\n\n\n\n\n\n\n\nThis is alot of soybean consumption in Zambia, South Korea, and Japan, less in other parts of the world.\n\n\n\n\n\n\n\n\n\n\nThere is a lot of Wheat consumption in North Africa",
+    "text": "8.1 Answering grand research question\n\n\n\n\n\n\n\n\n\nThere is alot of Beef consumption in Argentina, compared to the rest of the world.\n\n\n\n\n\n\n\n\n\n\nEggs are generally consumed less in African countries\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLamb and Goat consumption is greater in north African countries as well as Australia and New Zealand.\n\n\n\n\n\n\n\n\n\n\nDairy consumption is greater in northern European countries.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPork consumption is most popular in Europe.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRice consumption is concentrated mainly in Asia\n\n\n\n\n\n\n\n\n\n\nThis is alot of soybean consumption in Zambia, South Korea, and Japan, less in other parts of the world.\n\n\n\n\n\n\n\n\n\n\nThere is a lot of Wheat consumption in North Africa",
     "crumbs": [
       "Best Work",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Exam 1</span>"
