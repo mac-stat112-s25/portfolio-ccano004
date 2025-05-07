@@ -1,0 +1,83 @@
+---
+title: "Solo Project"
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
+library(tidyverse)
+library(leaflet)
+library(sf)
+library(rnaturalearth)
+library(ggplot2)
+library(tigris)
+
+#Use this for counties with geography column
+mn_counties <- counties(state = "MN", cb =TRUE)
+
+#This gives me townships not counties
+#mn_count <- read_sf("~/GitHub/portfolio-ccano004/bw/bw-solo_prof_files/tl_2016_27_cousub.shp")
+
+#Food envi index data
+food_index <- read_csv("../data/food_envi_index_data.csv")
+
+#https://www.countyhealthrankings.org/health-data/community-conditions/health-infrastructure/health-promotion-and-harm-reduction/food-environment-index?year=2025&state=27&tab=1
+
+```
+
+```{r}
+#ggplot() +
+   geom_sf(data = mn_counties) 
+
+#mn_counties |>
+  #head()
+
+#+ coord_sf(crs = "+proj=merc")
+
+#mn_count |> arrange(NAME) |>
+  #head()
+#view(mn_count)
+
+#head(food_index)
+
+#Change county variable to remove "county" at the end
+#mn_counties <- mn_counties |>
+#  mutate(County = str_sub(NAMESLAD, 1, -7)) 
+
+#head(mn_counties)
+
+```
+
+
+```{r}
+# mn_count |>
+#   st_join(hw) |>
+#   head()
+
+
+# This is the incorrect join
+# joined_food_index <- food_index |>
+#   left_join(mn_count, join_by("County" == "NAME"))
+
+#Joining our food_index dataset into our shapefile data
+joined_food_index <- mn_counties |>
+  left_join(food_index, by = c("NAME" = "County"))
+
+```
+
+
+
+
+
+```{r fig.alt = "Food Environment Index by Minnesota Counties"}
+
+# Now joined_food_index is still an sf object.
+ggplot(data = joined_food_index) +
+  geom_sf(aes(fill = Food_Env_Index), color = "white", na.rm = TRUE) +
+  coord_sf(lims_method = "geometry_bbox") +
+  scale_fill_viridis_c(option = "plasma", name = "Food Environment Index") +
+  labs(title = "Food Environment Index in Minnesota Counties", caption = "Data from: County Health Rankings at the University of Wisconsin." ) +
+  theme_void()
+
+```
+
+

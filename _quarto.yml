@@ -4,7 +4,7 @@ project:
 
 book:
   title: "COMP/STAT112 Notebook"
-  author: "Your Name Here"
+  author: "Cristian Cano"
   date: today
   reader-mode: true
   page-navigation: true
@@ -13,7 +13,7 @@ book:
   
   
   sidebar:
-    title: "Your Name Here"
+    title: "Cristian Cano"
     collapse-level: 2
     style: "docked"
     pinned: true
@@ -30,6 +30,14 @@ book:
       - bw/bw-tri.qmd
       - bw/bw-quad.qmd
       - bw/bw-spatial.qmd
+      - bw/bw-soloproj.qmd
+      - bw/Exam.qmd
+      
+      
+    - part: "Summaries"
+      chapters: 
+        - data/summary.qmd
+        
 
     - part: "In-class Activities"
       chapters: 
@@ -37,6 +45,15 @@ book:
       - ica/ica-bi.qmd
       - ica/ica-multi.qmd
       - ica/ica-spatial.qmd
+      - ica/ica-effective.qmd
+      
+      #- ica/ica-wrangling.qmd
+      - ica/ica-dates.qmd
+      - ica/joining.qmd
+      - ica/Strings.qmd
+      - ica/ica-dataimport.qmd
+      
+      
 
 format:
   html:
@@ -51,10 +68,15 @@ format:
     code-link: true
     code-line-numbers: true
     code-tools: true
+    code-fold: true
 
 execute:
   cache: false
   freeze: auto
+  echo: true     # change to true to show the code
+  error: false
+  warning: false
+  
 
 editor: 
   markdown:

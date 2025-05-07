@@ -1,0 +1,139 @@
+---
+title: "Joining In-class-activity 3/10/25"
+---
+
+```{r}
+#Example 1: Default Order
+library(tidyverse)
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv") |> 
+  select(state_abbr, historical, county_name, total_votes_20, repub_pct_20, dem_pct_20) |> 
+  mutate(dem_support_20 = case_when(
+    (repub_pct_20 - dem_pct_20 >= 5) ~ "low",
+    (repub_pct_20 - dem_pct_20 <= -5) ~ "high",
+    .default = "medium"
+  ))
+
+# Check it out
+head(elections)  
+ggplot(elections, aes(x = dem_support_20)) + 
+  geom_bar()
+
+
+#Factors: The above categories of dem_support_20 are listed alphabetically, which isn’t particularly meaningful here. This is because dem_support_20 is a character variable and R thinks of character strings as words, not category labels with any meaningful order (other than alphabetical)
+# Notice that the order of the levels is not alphabetical!
+
+# We can fix this by using fct_relevel() to both:
+# Store dem_support_20 as a factor variable, the levels of which are recognized as specific levels or categories, not just words.
+
+#Specify a meaningful order for the levels of the factor variable.
+elections <- elections |> 
+  mutate(dem_support_20 = fct_relevel(dem_support_20, c("low", "medium", "high")))
+
+# Notice the new structure of the dem_support_20 variable
+str(elections)
+
+# And plot dem_support_20
+ggplot(elections, aes(x = dem_support_20)) +
+  geom_bar()
+
+elections |> 
+  count(dem_support_20)
+```
+
+```{r}
+# We can redefine any number of the category labels.
+# Here we'll relabel all 3 categories:
+elections <- elections |> 
+  mutate(results_20 = fct_recode(dem_support_20, 
+                                 "strong republican" = "low",
+                                 "close race" = "medium",
+                                 "strong democrat" = "high"))
+
+# Check it out
+# Note that the new category labels are still in a meaningful,
+# not necessarily alphabetical, order!
+elections |> 
+  count(results_20)
+
+# This is too many density plots to put on top of one another. Let’s spread these out while keeping them in the same frame, hence easier to compare, using a joy plot or ridge plot:
+library(ggridges)
+elections |> 
+  ggplot(aes(x = repub_pct_20, y = state_abbr, fill = historical)) + 
+    geom_density_ridges() + 
+    scale_fill_manual(values = c("blue", "purple", "red"))
+
+
+#state_abbr is ordered alphabetically. Let's reorder based on another variable using fct_reorder()
+
+# Since we might want states to be alphabetical in other parts of our analysis,
+# we'll pipe the data into the ggplot without storing it:
+#reorder state_abbr based on their median republican support
+elections |> 
+  mutate(state_abbr = fct_reorder(state_abbr, repub_pct_20, .fun = "median")) |> 
+  ggplot(aes(x = repub_pct_20, y = state_abbr, fill = historical)) + 
+    geom_density_ridges() + 
+    scale_fill_manual(values = c("blue", "purple", "red"))
+
+
+
+# To reorder based on demsupport used: .desc = TRUE
+elections |> 
+  mutate(state_abbr = fct_reorder(state_abbr, repub_pct_20, .fun = "median", .desc = TRUE)) |> 
+  ggplot(aes(x = repub_pct_20, y = state_abbr, fill = historical)) + 
+    geom_density_ridges() + 
+    scale_fill_manual(values = c("blue", "purple", "red"))
+
+```
+
+
+```{r}
+#Exercises 1: Changing order
+
+#Grades data but gets rid of some duplicate rows!
+grades <- read.csv("https://mac-stat.github.io/data/grades.csv") |> 
+  distinct(sid, sessionID, .keep_all = TRUE)
+# Check it out
+head(grades)
+
+#Number of times each grade was assigned
+grade_distribution <- grades |> 
+  count(grade)
+head(grade_distribution)
+
+#Column plot of grade_distribution
+grade_distribution |> 
+  ggplot(aes(x = grade, y = n)) +
+    geom_col()
+
+
+#The above order is goofy so we'll construct a new column plot, manually reordering the grades from high (A) to low (NC) with “S” and “AU” at the end: uses fct_relevel()
+grade_distribution |>
+  mutate(grade = fct_relevel(grade, c("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "NC", "S", "AU"))) |>
+  ggplot(aes(x = grade, y = n)) +
+    geom_col()
+
+
+# Construct a new column plot, reordering the grades in ascending frequency (i.e. how often the grades were assigned):
+grade_distribution |>
+  mutate(grade = fct_reorder(grade, n)) |>
+  ggplot(aes(x = grade, y = n)) +
+    geom_col()
+
+
+# reordering the grades in descending frequency
+grade_distribution |>
+  mutate(grade = fct_reorder(grade, n, .desc = TRUE)) |>
+  ggplot(aes(x = grade, y = n)) +
+    geom_col()
+
+
+
+# Exercise 2: Changing Factor Level Labels
+# It may not be clear what “AU” and “S” stand for. Construct a new column plot that renames these levels “Audit” and “Satisfactory”, while keeping the other grade labels the same and in a meaningful order:
+grade_distribution |>
+  mutate(grade = fct_relevel(grade, c("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "NC", "S", "AU"))) |>
+  mutate(grade = fct_recode(grade, "Audit" = "AU", "Satisfactory" = "S")) |>
+  ggplot(aes(x = grade, y = n)) +
+    geom_col()
+
+```

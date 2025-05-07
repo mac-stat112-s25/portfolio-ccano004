@@ -1,0 +1,141 @@
+---
+title: "Dates activity 2/26/25"
+---
+
+```{r}
+
+library(tidyverse)
+penguins <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv')
+
+# Check it out
+head(penguins)
+
+
+# Get data on only Adelie penguins that weigh more than 4700g
+penguins |> 
+  filter(species == "Adelie") |>
+  filter(body_mass_g > 4700)
+
+
+# Get data on penguin body mass only, Show just the first 6 rows
+penguins |> 
+  select(body_mass_g) |>
+  head()
+
+
+# Sort the penguins from smallest to largest body mass, Show just the first 6 rows
+penguins |>
+  arrange(body_mass_g)
+
+
+# Calculate the average body mass across all penguins,  Note: na.rm = TRUE removes the NAs from the calculation
+penguins |>
+  summarize(mean(body_mass_g, na.rm = TRUE)) 
+
+
+# Calculate the average body mass by species
+penguins |>
+  group_by(species) |>
+  summarize(avg = mean(body_mass_g, na.rm = TRUE))
+
+
+# Create a new column that records body mass in kilograms, not grams.
+# Show just the first 6 rows
+penguins |>
+  mutate(kg = body_mass_g / 1000) |>
+  head()
+
+#How many penguins of each species do we have? Create a viz that addresses this question.
+ggplot(penguins, aes(x = species)) +
+  geom_bar()
+
+#The count() verb provides a handy shortcut!
+penguins |> 
+  count(species)
+```
+
+```{r}
+# Exercise 1: more filtering
+
+
+# Create a dataset with just Adelie and Chinstrap using %in%
+# Pipe this into `count(species)` to confirm that you only have these 2 species
+penguins |>
+  filter(species == "Adelie", species == "Chinstrap") |>
+  count(species)
+
+
+penguins |>
+  filter(species != "Gentoo") |>
+  count(species)
+
+
+#Use this to remove na (missing) data values from penguins body mass data
+# NOTE the use of is.na()
+penguins_w_body_mass <- penguins |> 
+  filter(!is.na(body_mass_g))
+
+# Compare the number of penguins in this vs the original data
+nrow(penguins_w_body_mass)
+
+#orginal dataset
+nrow(penguins)
+
+
+
+# We can use na.omit() to get rid of any penguin that’s missing info on any variable:
+#However this is very rarely done
+penguins_complete <- penguins |> 
+  na.omit()
+
+nrow(penguins_complete)
+#Eliminates 11 rows from orginal dataset
+nrow(penguins)
+
+```
+
+```{r}
+#Exercise 2: More selecting
+
+
+# First: recall the variable names
+names(penguins)
+
+# Use a shortcut to keep everything but the year and island variables
+penguins |> 
+  select(-year) |> 
+  names()
+
+
+# Use a shortcut to keep only species and the penguin characteristics measured in mm
+penguins |>
+  select(species, ends_with("mm"))
+     
+     
+# Use a shortcut to keep only species and bill-related measurements
+penguins |>
+  select(species, starts_with("bill"))
+
+# Use a shortcut to keep only species and the length-related characteristics
+penguins |>
+  select(species, contains("length"))
+
+```
+
+```{r}
+#Exercise 3: Arranging, Counting, & Grouping by Multiple Variables
+
+# Change this code to sort the penguins by species, and then island name
+# NOTE: The first row should be an Adelie penguin living on Biscoe island
+penguins |> 
+  arrange(species) |>
+  arrange(island)
+
+# Change this code to count the number of male/female penguins observed for each species
+penguins |> 
+  count(species)
+
+
+
+
+```

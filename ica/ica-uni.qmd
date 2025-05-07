@@ -1,5 +1,80 @@
 ---
 title: "Univariate Viz"
+
+#Use this file for practice with the **univariate viz** in-class activity.  Refer to the class website for details.
+
 ---
 
-Use this file for practice with the **univariate viz** in-class activity.  Refer to the class website for details.
+```{r}
+# Import data
+hikes <- read.csv("https://mac-stat.github.io/data/high_peaks.csv")
+head(hikes)
+
+# Load the package
+library(tidyverse)
+
+# Use the ggplot function
+ggplot(hikes, aes(x = rating))
+
+# This counted the number of hikes in each rating category, instead of the previous blank bar graph
+ggplot(hikes, aes(x = rating)) +
+  geom_bar()
+
+# This changed the names of the labels of the x-axis and y-axis
+ggplot(hikes, aes(x = rating)) +
+  geom_bar() +
+  labs(x = "Rating", y = "Number of hikes")
+
+# fill changed the color of the bar graph
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(fill = "blue") +
+  labs(x = "Rating", y = "Number of hikes")
+
+# color = outline color of bars
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(color = "orange", fill = "blue") +
+  labs(x = "Rating", y = "Number of hikes")
+
+# changed the background of the bargraph
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(color = "orange", fill = "blue")  +
+  labs(x = "Rating", y = "Number of hikes") +
+  theme_minimal()
+
+#Exercise 6: Sad Bar Chart of Elevation
+ggplot(hikes, aes(x = elevation)) +
+  geom_bar() +
+  labs(x = "Elvation", y = "Number of hikes")
+
+# Exercise 9: Building Histograms
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram()
+
+# outline of the bars is now white to easier distinguish
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white") 
+
+# color of bars is blue with white outline
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white", fill = "blue") 
+
+# changed axis labels
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white") +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+
+# changed with of bars to include chunks of 1000 feet in elevation per bar
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white", binwidth = 1000) +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white", binwidth = 100) +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+
+# Exercise 11: Density Plots
+ggplot(hikes, aes(x = elevation)) +
+  geom_density(color = "blue", fill = "orange")
+
+```

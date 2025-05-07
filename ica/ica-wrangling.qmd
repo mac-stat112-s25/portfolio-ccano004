@@ -1,0 +1,214 @@
+---
+title: "Wrangling activities 2/24/25"
+---
+
+```{r}
+
+# Load tidyverse & data
+library(tidyverse)
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+
+# (This selects these for vairables)
+elections |>
+  select(state_name, county_name, dem_pct_20, dem_pct_16)
+  
+# Lets filter() out only the rows related to Minnesota (MN): With a pipe (all variables from OG dataset included)
+elections |> 
+  filter(state_name == "Minnesota")
+  
+  
+# Let’s combine select() and filter() to create a new dataset with info about the county names, and 2020 and 2016 Democratic support among Minnesota counties.
+# With pipes: each verb in a new row
+elections |> 
+  select(state_name, county_name, dem_pct_20, dem_pct_16) |> 
+  filter(state_name == "Minnesota")
+  
+#In this case reversing the order of the verbs produces the same result
+elections |> 
+  filter(state_name == "Minnesota") |> 
+  select(state_name, county_name, dem_pct_20, dem_pct_16)
+
+```
+
+
+```{r}
+
+# This store the results under a new dataset name
+mn <- elections |> 
+  select(state_name, county_name, dem_pct_20, dem_pct_16) |> 
+  filter(state_name == "Minnesota")
+
+# Always check it out to confirm it's what you want it to be!
+head(mn)
+
+nrow(mn)
+nrow(elections)
+
+```
+
+```{r}
+# 8.5 Exercise 1: select() Practice
+
+# Define elections_small
+elections_small <- elections |>
+  select(state_name, county_name, total_votes_20, repub_pct_20, dem_pct_20, total_votes_16, dem_pct_16)
+
+# Check out the first 6 rows to confirm your code did what you think it did!
+head(elections_small)
+
+```
+
+```{r}
+# Exercise 2: filter() demo
+# Whereas select() selects certain variables or columns, filter() keeps certain units of observation or rows relative to their outcome on certain variables.
+# We must use a “logical comparison operator” to define which values of the variable to keep such as ==, =/= >, etc, or quotes "" when specifying outcomes of interest for a categorical variable.
+
+
+# Keep only data on counties in Hawaii
+elections_small |>
+ filter(state_name == c("Hawaii", "Delaware"))
+#only keeps 4 rows of data, need to check solutions to fix
+
+
+# This is same as above but keeps only 7 rows of data
+elections_small |> 
+   filter(state_name %in% c("Hawaii", "Delaware"))
+
+# Keep only data on counties where the Republican got MORE THAN 93.97% of the vote in 2020
+elections_small |>
+  filter(repub_pct_20 > 93.97)
+
+# Keep only data on counties where the Republican got AT LEAST 93.97% of the vote in 2020.
+elections_small |>
+  filter(repub_pct_20 >= 93.97)
+
+
+# Keep only data on counties in Texas where the Democrat got more than 65% of the vote in 2020. Do this 2 ways.
+# Method 1: 2 filters with 1 condition each
+elections_small |>
+ filter(state_name == "Texas") |>
+ filter(dem_pct_20 > 65)
+
+# Method 2: 1 filter with 2 conditions
+elections_small |>
+ filter(state_name == "Texas", dem_pct_20 > 65)
+
+```
+
+```{r}
+# Exercise 3: arrange() demo
+# arrange() arranges or sorts the rows in a dataset according to a given column or variable, in ascending or descending order:
+
+# Arrange the counties in elections_small from lowest to highest percentage of 2020 Republican support
+# Print out just the first 6 rows
+elections_small |>
+  arrange(repub_pct_20) |>
+  head()
+
+# Arrange from highest to lowest percentage of 2020 Republican support
+# Print out just the first 6 rows
+elections_small |>
+  arrange(desc(repub_pct_20)) |>
+  head()
+
+```
+
+```{r}
+# # Exercise 4: mutate Demo
+# mutate() can either transform / mutate an existing variable (column), or define a new variable based on existing ones.
+
+# this creates diff_20 which subtracts dem_pct_20 from repub_pct_20
+elections_small |>
+  mutate(diff_20 = repub_pct_20 - dem_pct_20) |>
+  head()
+
+# This creates new variable (column) which calculates the total votes for that county
+elections_small |>
+  mutate(repub_votes_20 = round(total_votes_20 * repub_pct_20/100)) |>
+  head()
+
+
+# This shows true or false if republicans won in 2020
+elections_small |>
+  mutate(repub_win_20 = repub_pct_20 > dem_pct_20) |>
+  head()
+
+
+# Part B
+# Define a variable that calculates the change in Dem support in 2020 vs 2016
+elections_small |>
+ mutate(dem_support = dem_pct_20 - dem_pct_16) |>
+ head()
+
+
+# Define a variable that determines whether the Dem support was higher in 2020 than in 2016 (TRUE/FALSE)
+elections_small |>
+ mutate(dem_increase_20 = dem_pct_20 > dem_pct_16) |>
+ head()
+
+```
+
+
+```{r}
+# I believe this filters into Wisconsin counties that had a greater vote for dem in 2020 than for rep and sorts (arranges) by descending order of total votes.
+elections_small |> 
+  filter(state_name == "Wisconsin",
+         repub_pct_20 < dem_pct_20) |>
+  arrange(desc(total_votes_20)) |>
+  head()
+
+# Part d: I believe this code will filter only counties in delaware and create a new column/ variable about whether the republicans won that county. The select will push out this filtered data with only the 4 varaiables below.
+elections_small |>
+  filter(state_name == "Delaware") |>
+  mutate(repub_win_20 = repub_pct_20 > dem_pct_20) |>
+  select(county_name, repub_pct_20, dem_pct_20, repub_win_20)
+
+# Now try it. Change the order of mutate and select below.
+elections_small |>
+  filter(state_name == "Delaware") |>
+  select(county_name, repub_pct_20, dem_pct_20, repub_win_20) |> 
+  mutate(repub_win_20 = repub_pct_20 > dem_pct_20)
+#This does not work because the repub_win_20 defined in mutate does not exist yet in select.
+
+```
+
+```{r}
+#Exercise 7: summarize() Demo
+
+# This pulls the median (middle number) of the repub_pct_20 column
+elections_small |>
+  summarize(median(repub_pct_20))
+
+# This also pulls the median but defines it as a new variable
+elections_small |>
+  summarize(median_repub = median(repub_pct_20))
+
+# sum pulls the sum of the values in the column total_votes_20
+elections_small |>
+  summarize(median_repub = median(repub_pct_20), total_votes = sum(total_votes_20))
+
+```
+
+```{r}
+# Exercise 8: group_by() and summarize()
+
+elections_small |>
+  group_by(state_name)
+
+# Check out the structure before and after group_by
+elections_small |>
+  class()
+
+elections_small |>
+  group_by(state_name) |>
+  class()
+
+# In combination with summarize, group_by sorts state names by alphabetical order, and the summarize makes the new variables for the median in of variables specified below?
+# If we did not use group by, I believe it would'nt have sorted by alphabetical order
+elections_small |>
+  group_by(state_name) |>
+  summarize(median_repub = median(repub_pct_20), total_votes = sum(total_votes_20))
+
+
+
+```
