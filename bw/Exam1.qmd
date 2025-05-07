@@ -1,8 +1,15 @@
 ---
 title: "Exam 1"
+Author: "Cristian Cano"
+Date: 05/06/2025
 ---
 
-#Grand Research Question: What does the consumption of each food category in each country look like?
+```{r, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
+```
+
+
+# Grand Research Question: What does the consumption of each food category in each country look like?
 
 
 **Get Data**
@@ -19,8 +26,8 @@ head(tuesdata)
 fc <- tuesdata$food_consumption
 head(fc)
 
-
 ```
+
 
 **Understand Data**
 ```{r}
@@ -34,14 +41,14 @@ fc
 
 **Understand Variables Individually**
 
-food_category is a categorical variable so use a bar graph to visualize
-consumption is quantitative variable, could use histogram, density, or boxplot to visualize
-co2_emmission is  quantitative variable, could use histogram, density, or boxplot to visualize
-country is categorical variable so could use a bar graph to visualize
+- food_category is a categorical variable so use a bar graph to visualize
+- consumption is quantitative variable, could use histogram, density, or boxplot to visualize
+- co2_emmission is  quantitative variable, could use histogram, density, or boxplot to visualize
+- country is categorical variable so could use a bar graph to visualize
 
 
 
-##Answering grand research question
+## Answering grand research question
 
 
 ```{r}
@@ -82,6 +89,7 @@ joined_world_sf_beef |>
   theme_minimal()
 
 ```
+- There is alot of Beef consumption in Argentina, compared to the rest of the world.
 ```{r}
 df_eggs <- fc1 |>
   filter(food_category == "Eggs")
@@ -101,6 +109,7 @@ joined_world_sf_eggs |>
   labs(title = "Consumption of Eggs by Country") +
   theme_minimal()
 ```
+
 
 ```{r}
 df_fish <- fc1 |>
@@ -234,6 +243,7 @@ joined_world_sf_rice |>
   labs(title = "Consumption of Rice by Country") +
   theme_minimal()
 ```
+- Rice consumption is concentrated mainly in Asia
 
 ```{r}
 df_soybeans <- fc1 |>
@@ -253,8 +263,11 @@ joined_world_sf_soybeans |>
   labs(title = "Consumption of Soybeans by Country") +
   theme_minimal()
 ```
+- This is alot of soybean consumption in Zambia, South Korea, and Japan, less in other parts of the world.
 
-```{r}
+```{r fig.alt = "Consumption of Wheat by Country"}
+
+
 df_wheat <- fc1 |>
   filter(food_category == "Wheat and Wheat Products")
 
@@ -272,4 +285,8 @@ joined_world_sf_wheat |>
   labs(title = "Consumption of Wheat by Country") +
   theme_minimal()
 ```
+
+- There is a lot of Wheat consumption in North Africa
+
+
 

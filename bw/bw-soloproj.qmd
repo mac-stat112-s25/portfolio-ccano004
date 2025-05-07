@@ -24,11 +24,11 @@ food_index <- read_csv("../data/food_envi_index_data.csv")
 ```
 
 ```{r}
-ggplot() +
+#ggplot() +
    geom_sf(data = mn_counties) 
 
-mn_counties |>
-  head()
+#mn_counties |>
+  #head()
 
 #+ coord_sf(crs = "+proj=merc")
 
@@ -36,7 +36,7 @@ mn_counties |>
   #head()
 #view(mn_count)
 
-head(food_index)
+#head(food_index)
 
 #Change county variable to remove "county" at the end
 #mn_counties <- mn_counties |>
@@ -61,7 +61,6 @@ head(food_index)
 joined_food_index <- mn_counties |>
   left_join(food_index, by = c("NAME" = "County"))
 
-head(joined_food_index)
 ```
 
 
@@ -76,8 +75,7 @@ ggplot(data = joined_food_index) +
   coord_sf(lims_method = "geometry_bbox") +
   scale_fill_viridis_c(option = "plasma", name = "Food Environment Index") +
   labs(title = "Food Environment Index in Minnesota Counties") +
-  theme_minimal()
-
+  theme_void()
 
 ```
 
